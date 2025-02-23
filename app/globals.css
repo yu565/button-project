@@ -1,0 +1,13 @@
+body {
+  background-color: #121212; /* ダークモード風の背景 */
+  color: white; /* 文字色を白に */
+  font-family: Arial, sans-serif; /* フォントを設定 */
+  text-align: center; /* 中央揃え */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 画面いっぱいに表示 */
+}
+
