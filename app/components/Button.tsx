@@ -17,74 +17,37 @@ const Button: React.FC<ButtonProps> = ({
   disabled = false,
   isLoading = false,
 }) => {
-  const getButtonStyle = () => {
-    switch (variant) {
-      case "filled":
-        return {
-          backgroundColor: "#000",
-          color: "#fff",
-          border: "none",
-          opacity: isLoading || disabled ? 0.5 : 1, 
-          cursor: disabled ? "not-allowed" : "pointer",
-          transition: "all 0.2s ease-in-out",
-        };
-      case "outline":
-        return {
-          backgroundColor: "transparent",
-          color: "#000",
-          border: "2px solid #000",
-          cursor: disabled ? "not-allowed" : "pointer",
-          opacity: isLoading || disabled ? 0.5 : 1,
-          transition: "all 0.2s ease-in-out",
-        };
-      case "ghost":
-        return {
-          backgroundColor: "#fff",
-          color: "#000",
-          border: "none",
-          cursor: disabled ? "not-allowed" : "pointer",
-          opacity: isLoading || disabled ? 0.5 : 1,
-          transition: "all 0.2s ease-in-out",
-        };
-      default:
-        return {};
-    }
+  const baseStyle = "px-6 py-2 rounded-lg text-lg font-bold transition-all duration-200";
+  const disabledStyle = "opacity-50 cursor-not-allowed";
+  
+  const variantStyles = {
+    filled: "bg-black text-white hover:bg-gray-800",
+    outline: "border-2 border-black text-black hover:bg-black hover:text-white",
+    ghost: "bg-white text-black hover:bg-gray-200",
   };
 
   return (
     <button
       onClick={onClick}
-      style={{
-        padding: "10px 20px",
-        fontSize: "16px",
-        borderRadius: "5px",
-        cursor: disabled ? "not-allowed" : "pointer",
-        opacity: disabled ? 0.5 : 1,
-        transition: "opacity 0.2s, box-shadow 0.2s",
-        outline: "none",
-        ...getButtonStyle(),
-      }}
+      className={`${baseStyle} ${variantStyles[variant]} ${disabled ? disabledStyle : ""}`}
       disabled={disabled}
-      onMouseEnter={(e) => {
-        if (!disabled) e.currentTarget.style.opacity = "0.8"; 
-      }}
-      onMouseLeave={(e) => {
-        if (!disabled) e.currentTarget.style.opacity = "1"; 
-      }}
-      onFocus={(e) => {
-        if (!disabled) e.currentTarget.style.boxShadow = "0 0 5px rgba(0,0,0,0.5)"; 
-      }}
-      onBlur={(e) => {
-        if (!disabled) e.currentTarget.style.boxShadow = "none"; 
-      }}
     >
-      {isLoading ? "読み込み中..." : children}
+      {isLoading ? (
+        <div className="flex items-center">
+          <svg className="animate-spin h-5 w-5 mr-2 text-white" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.37 0 0 5.37 0 12h4z"></path>
+          </svg>
+          読み込み中...
+        </div>
+      ) : (
+        children
+      )}
     </button>
   );
 };
 
 export default Button;
-
 
 
 
